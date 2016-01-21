@@ -13,6 +13,10 @@
    order (and just keeps the first in place).
    It should have type: int * int * int -> int * int * int
 *)
+let fixLastTwo ((x:int),(y:int),(z:int)) = 
+if(y>z)
+   then (x,z,y)
+else (x,y,z);;
 
 
 (*
@@ -21,6 +25,14 @@
    You may want to use the function from the previous part.
    It should have type: int * int * int -> int * int * int
 *)
+let order(x,y,z) = 
+if(x<y && x<y)
+then fixLastTwo(x,y,z)
+else if (y< x && y < z)
+then fixLastTwo(y,x,z)
+else fixLastTwo(z,x,y);;
+
+
 
 
 (*
@@ -29,7 +41,10 @@
    as is the distance between 4 and 10.
    It should have type: int * int -> int
 *)
-
+let distance (x,y) = 
+   if(x>y)
+   then x-y
+else y-x;;
 
 
 
@@ -41,7 +56,8 @@
    It should have type: int * string -> string
    You may see "bytes" instead of "string" as a type.
 *)
-
+let greeting((age:int),(name:string)) = 
+"Greetings " ^ name ^ ", you are " ^ string_of_int age ^ " years old!";;
 
 
 (*
@@ -55,6 +71,14 @@
    You may see "bytes" instead of "string" as a type.
 *)
 
+let greeting2 ((age:int),(name:string)) = 
+if (age < 0 || age = 0)
+then "Greetings " ^ name ^ ", you are not born yet!"
+else if (age < 21) 
+then "Greetings " ^ name ^ ", you are a youngster!"
+else "Greetings " ^ name ^ ", you are young at heart!";;
+
+
 
 
 (*
@@ -64,7 +88,8 @@
    a string.
    It should have type: int * string -> bool
 *)
-
+let tooShort (a,b) =
+   a > String.length b;;
 
 
 (*
@@ -72,7 +97,8 @@
    their total length.
    It should have type string * string -> int
 *)
-
+let totalLength (a,b) = 
+   String.length a + String.length b;;
 
 
 
@@ -83,6 +109,9 @@
    string more than once.
    It should have type: string * string * string -> bool
 *)
+let  orderedByLength (a,b,c) = 
+let (x,y,z) = (String.length a, String.length b, String.length c) in
+x < y && y < z;;
 
 
 
@@ -94,4 +123,6 @@
    integers more than once.
    It should have type: int * int -> bool
 *)
-
+let prodInRange (a,b) = 
+   let c = a*b in
+   c > 10 && c < 20;;
