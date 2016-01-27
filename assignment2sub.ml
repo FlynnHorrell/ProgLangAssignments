@@ -13,9 +13,11 @@
    the list does not have n elements, it should raise an exception (Failure "getnth").
    It should have type: int * string list -> string
 *)
-
-
-
+   let rec getnth ((n: int), (lst: string list)) =     
+         match lst with
+         | x :: rest ->  if n = 1 then x
+                                 else getnth (n - 1,rest)
+         | [] -> Failure "getnth"
 (*
    Write a function `lookup` that takes as input a pair of a string s and a list
    consisting of pairs of a string and an integer. It then goes through the list
@@ -24,10 +26,11 @@
    pair then it returns "None".
    It should have type: string * (string * int) list -> int option
 *)
-
-
-
-
+   let rec lookup ( (s:string), (lst: (string * int) list))  =   
+      match lst with
+      | [] -> None
+      | (x,y) :: rest -> if x = s then Some y 
+                                 else lookup (s,rest)
 (*
    Write a function `inPairs` that takes a list of integers and returns a list
    of pairs of integers as follows: Starting from the head of the list, it puts
@@ -36,10 +39,15 @@
    inPairs [1; 2; 3; 4; 5] = [(1, 2); (3, 4)]
    It should have type: int list -> (int * int) list
 *)
-
-
-
-
+   let inPairs (lst:int list) = (*(1,1)::[]*)
+      let rec pairer (lst2,pairs) = 
+      match lst2 with
+      | x :: y :: rest -> pairer (rest, (x,y) :: pairs)
+      | x :: rest -> List.rev pairs
+      | [] -> List.rev pairs
+      in pairer (lst,[])
+      (* need to flip pairs around*)
+       
 (*
    Write a function `flatten` that takes as input a list of lists of integers
    and "flattens it out", returning a single list of integers which is the result
@@ -48,6 +56,13 @@
    It should have type: int list list -> int list
 *)
 
+   let rec flatten (lst: int list list) = 
+      let rec create (lst2,concat) = 
+      match lst2 with
+      | x :: rest -> create(rest, concat @ x)
+      | [] -> concat
+      in create(lst,[])
+
 
 
 (*
@@ -55,7 +70,12 @@
    list of integers, and removes from that list any occurrence of n.
    It should have type: int * int list -> int list
 *)
-
+   let rec remove ((a: int),(b: int list)) = 
+      let rec aux (lst,lst2) = 
+      match lst with
+      |x::rest -> if x = a then aux(rest,lst2) else aux(rest, x::lst2)
+      |[] -> List.rev lst2
+      in aux (b,[])
 
 
 (*
@@ -65,9 +85,12 @@
    removeDups [4; 1; 2; 1; 4; 5; 20] = [4; 1; 2; 5; 20]
    It should have type: int list -> int list
 *)
-
-
-
+   let rec removeDups (a:int list) = 
+      let rec aux (b,lst) = 
+      match b with 
+      | x :: rest -> aux(remove(x,rest),x::lst)
+      | [] -> List.rev lst
+   in aux (a,[])
 
 (*
    Write a function `collateSome` that takes as input a list of int options
@@ -76,7 +99,13 @@
    collateSome [Some 1; None; Some 2; Some 1; None; Some 3] = [1; 2; 1; 3]
    It should have type: int option list -> int list
 *)
-
+   let rec collateSome (lst: int option list) = 
+      let rec aux (lst2,newLst) =
+      match lst2 with 
+      | Some x :: rest -> aux(rest,x :: newLst)
+      | None :: rest -> aux(rest,newLst)
+      | [] -> List.rev newLst
+      in aux(lst,[])
 
 
 
@@ -87,7 +116,12 @@
    unzip2 [(1, 2); (3, 4); (5, 6)] = ([1; 3; 5], [2; 4; 6])
    It should have type: (int * int) list -> int list * int list
 *)
-
+   let rec unzip2 (lst: (int*int) list) = 
+      let rec aux ((lst2:(int*int) list),(pair1:int list),(pair2:int list)) = 
+         match lst2 with 
+         | (x,y)::rest -> aux(rest,x::pair1,y::pair2)
+         | [] -> (List.rev pair1, List.rev pair2)
+      in aux(lst,[],[])
 
 
 
@@ -105,5 +139,6 @@
    write some good tests of this behavior.
    It should have type: int * int list -> int list option
 *)
-
+   let rec makeChange ((x:int) ,(lst:int list)) = 
+     
 
