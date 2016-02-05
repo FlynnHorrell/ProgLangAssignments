@@ -83,19 +83,18 @@ type play = shape list
    other, stop at the shortest one.
    Type: play * play -> game
 *)
-   let game_from_plays (play1,play2:play*play) : game = 
+   let rec game_from_plays (play1,play2:play*play) : game = 
       match play1,play2 with
       |(_,[])
       |([],_) -> []
-      |(shp1 :: rest, shp2 :: rest2) -> (shp1,shp2) :: [] (*game_from_plays (rest,rest2)*)
+      |(shp1 :: rest, shp2 :: rest2) -> (shp1,shp2) :: game_from_plays (rest,rest2)
 
 (*
    Write a function `valid_game` that takes as input a game and determines if it is
    a valid game as described above.
    Type: game -> bool
 *)
-   let valid_game (gm:game):bool = false
-
+   let rec valid_game (gm:game):bool = false
 
 (*
    Write a function `play_game` that plays the game as described above.
@@ -135,7 +134,7 @@ type temp = C of float | F of float
 *)
    let temp_compare (tmp1,tmp2:temp*temp):int = 
       let (tmp1',tmp2') = (to_f tmp1,to_f tmp2) in
-      if tmp1' > tmp2'
+      if  tmp1' > tmp2'
       then 1
       else if tmp1' = tmp2'
       then 0

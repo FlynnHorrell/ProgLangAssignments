@@ -16,6 +16,11 @@ let t2e = is_tie (Scissors, Paper) = false
 
 let t3a = game_from_plays ([Rock; Paper; Rock], [Scissors; Rock; Rock]) =
                [(Rock, Scissors); (Paper, Rock); (Rock, Rock)]
+let t3b = game_from_plays ([Rock; Paper], [Scissors; Rock; Rock]) =
+               [(Rock, Scissors); (Paper, Rock)]
+let t3c = game_from_plays ([Rock; Paper; Rock], [Scissors; Rock]) =
+               [(Rock, Scissors); (Paper, Rock)]  
+let t3d = game_from_plays ([], []) = []                            
 
 let t4a = valid_game [(Rock, Scissors)] = true
 
