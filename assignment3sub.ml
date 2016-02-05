@@ -173,7 +173,15 @@ type temp = C of float | F of float
    if the list is empty.
    Type: temp list -> temp
 *)
-   let max_temp (lst:temp list):temp = C 1.0
+   let rec max_temp (lst:temp list):temp = 
+   match lst with
+   |[] -> raise "Failure max_temp"
+   |tmp :: rest -> if(temp_compare tmp match max_temp rest with
+                                    |[] -> tmp
+                                    |tmp2 :: rest2 -> tmp 2) = 1
+                  
+
+
 
 (*
    Write a function `max_temp2` that behaves like `max_temp` but where all the
