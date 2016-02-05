@@ -94,7 +94,14 @@ type play = shape list
    a valid game as described above.
    Type: game -> bool
 *)
-   let rec valid_game (gm:game):bool = false
+   let rec valid_game (gm:game):bool = 
+   match gm with
+   |[] -> true
+   |chk :: [] -> is_tie chk = false 
+   |chk :: rest -> if is_tie chk
+                   then valid_game rest
+                   else false
+
 
 (*
    Write a function `play_game` that plays the game as described above.
