@@ -107,7 +107,12 @@ type play = shape list
    Write a function `play_game` that plays the game as described above.
    Type: game -> result
 *)
-   let play_game (gm:game):result = Tie
+   let rec play_game (gm:game):result =
+   match gm with
+   |[] -> Tie
+   |chk :: rest -> if is_tie chk = false
+                   then result chk
+                   else play_game rest
 
 (* --------------------------------------
             TEMPERATURES
