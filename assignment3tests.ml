@@ -33,10 +33,9 @@ let t7a = temp_compare (C 2.3, C 2.3) = 0
 let t7a = temp_compare (C 100.0, F 100.0) = 1
 let t7a = temp_compare (C 0.0, F 450.5) = -1
 
-
-
-
 let t8a = string_of_temp (C 2.3) = "2.3C"
+let t8b = string_of_temp (F 2.3) = "2.3F"
+let t8c = string_of_temp (C 0.0) = "0.C"
 
 let t9a = max_temp [F 2.1; C 2.1] = C 2.1
 
