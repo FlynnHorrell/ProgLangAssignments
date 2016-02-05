@@ -51,18 +51,31 @@ type play = shape list
    returns the result of that check.
    Type: check -> result
 *)
-
-
+   let result (chk:check):result = 
+      match chk with
+      |(Rock,shp2) ->   if shp2 = Rock
+                        then Tie
+                        else if shp2 = Paper 
+                        then SndWin
+                        else FstWin
+      |(Paper,shp2) ->  if shp2 = Paper
+                        then Tie
+                        else if shp2 = Rock 
+                        then FstWin
+                        else SndWin
+      |(Scissors,shp2) ->  if shp2 = Scissors
+                           then Tie
+                           else if shp2 = Rock 
+                           then SndWin
+                           else FstWin
 
 (*
    Write a function `is_tie` that takes as input a check and returns
    whether the check's result is a tie.
    Type: check -> bool
 *)
-
-
-
-
+   let is_tie (chk:check):bool =
+      result chk = Tie
 (*
    Write a function `game_from_plays` that takes as input two plays (correspoding
    to the intended plays of the two players) and creates a game by combining them,
@@ -70,22 +83,25 @@ type play = shape list
    other, stop at the shortest one.
    Type: play * play -> game
 *)
-
-
+   let game_from_plays (play1,play2:play*play) : game = 
+      match play1,play2 with
+      |(_,[])
+      |([],_) -> []
+      |(shp1 :: rest, shp2 :: rest2) -> (shp1,shp2) :: [] (*game_from_plays (rest,rest2)*)
 
 (*
    Write a function `valid_game` that takes as input a game and determines if it is
    a valid game as described above.
    Type: game -> bool
 *)
-
+   let valid_game (gm:game):bool = false
 
 
 (*
    Write a function `play_game` that plays the game as described above.
    Type: game -> result
 *)
-
+   let play_game (gm:game):result = Tie
 
 (* --------------------------------------
             TEMPERATURES
@@ -106,7 +122,10 @@ type temp = C of float | F of float
    them to distinguish from the integer ones. For example "2.1 +. 5.2"
    Type: temp -> float
 *)
-
+   let to_f (tmp:temp):float = 
+      match tmp with
+      |C n -> 1.8 *. n +. 32.0
+      |F n -> n
 
 (*
    Write a function `temp_compare` that takes as input a pair of temperatures and
@@ -114,8 +133,13 @@ type temp = C of float | F of float
    equal and -1 if the second temperature is higher.
    Type: temp * temp -> int
 *)
-
-
+   let temp_compare (tmp1,tmp2:temp*temp):int = 
+      let (tmp1',tmp2') = (to_f tmp1,to_f tmp2) in
+      if tmp1' > tmp2'
+      then 1
+      else if tmp1' = tmp2'
+      then 0
+      else -1
 
 (*
    Write a function `string_of_temp` that takes as input a temperature and
@@ -125,7 +149,7 @@ type temp = C of float | F of float
    to strings.
    Type: temp -> string
 *)
-
+   let string_of_temp (tmp:temp):string = "A"
 
 
 
@@ -135,8 +159,11 @@ type temp = C of float | F of float
    if the list is empty.
    Type: temp list -> temp
 *)
+   let max_temp (lst:temp list):temp = C 1.0
+
 (*
    Write a function `max_temp2` that behaves like `max_temp` but where all the
    recursive calls are tail calls. You will likely need to define an auxiliary
    function and use state recursion.
 *)
+   let max_temp2 (lst:temp list):temp = C 1.0
