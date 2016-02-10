@@ -65,8 +65,7 @@ let thunk_of_eval (f,a)= fun() -> f a
    after the "with" is a pattern.
    It should have type: 'a thunk -> 'a option
 *)
-
-
+let try_thunk a = try Some (a()) with | Failure _ -> None
 
 (*
    Write a function `thunk_of_pair` that takes as input a pair of thunks, and returns
