@@ -85,7 +85,7 @@ let thunk_of_pair (a,b) = fun() -> (a(),b())
    the returned thunk is called.
    It should have type: 'a thunk * ('a -> 'b) -> 'b thunk
 *)
-
+let thunk_map (a,fnc) = fun() -> fnc(a())
 
 
 (*
