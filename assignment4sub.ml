@@ -74,7 +74,7 @@ let try_thunk a = try Some (a()) with | Failure _ -> None
    returned thunk is called.
    It should have type: 'a thunk * 'b thunk -> ('a * 'b) thunk
 *)
-
+let thunk_of_pair (a,b) = fun() -> (a(),b())
 
 
 (*
