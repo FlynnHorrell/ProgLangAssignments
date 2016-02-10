@@ -33,6 +33,7 @@ type 'a thunk = unit -> 'a
    and returns the `'a thunk` from it. This is an incredibly simple function.
    It should have type: (unit -> 'a) -> 'a thunk
 *)
+let thunk a = a
 
 
 
@@ -42,7 +43,7 @@ type 'a thunk = unit -> 'a
    simple function.
    Should have type: 'a -> 'a thunk
 *)
-
+let thunk_of_value a = fun() -> a
 
 
 (*
@@ -52,7 +53,7 @@ type 'a thunk = unit -> 'a
    is not applied until the thunk is evaluated.
    It should have type: ('a -> 'b) * 'a -> 'a thunk
 *)
-
+let thunk_of_eval (f,a)= fun() -> f a
 
 
 
