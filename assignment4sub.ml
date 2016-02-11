@@ -159,8 +159,8 @@ let rec insert (tbl, sym, v) =
    match tbl with
    | [] -> [(sym, v)]
    | (sym', v') :: rest  -> if sym = sym'
-                           then (sym, v) :: rest
-                           else insert (rest, sym, v)
+                            then (sym, v) :: rest
+                            else  insert (rest, sym, v)
 
 
 
@@ -172,7 +172,12 @@ let rec insert (tbl, sym, v) =
    keys are bigger than the searched-for key there is no need to continue the search.
    It should have type: 'a table * symbol -> bool
 *)
-
+let rec has (tbl,sym) = 
+   match tbl with
+   |[] -> false
+   |(sym',_) :: rest -> if sym > sym' 
+                then false
+                else sym = sym' || has (rest,sym)
 
 
 (*
