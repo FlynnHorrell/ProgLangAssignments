@@ -160,8 +160,9 @@ let rec insert (tbl, sym, v) =
    | [] -> [(sym, v)]
    | (sym', v') :: rest  -> if sym = sym'
                             then (sym, v) :: rest
-                            else  insert (rest, sym, v)
-
+                            else if sym < sym' 
+                            then (sym,v) :: insert (rest, sym', v')
+                            else (sym',v') :: insert(rest,sym,v)
 
 
 (*
