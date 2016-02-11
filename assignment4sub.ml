@@ -155,6 +155,12 @@ let empty : 'a table = []   (* A more intuitive notation for the empty list/tabl
    insert (empty, "foo", 3) = [("foo", 3)]
    It should have type: 'a table * symbol * 'a -> 'a table
 *)
+let rec insert (tbl, sym, v) = 
+   match tbl with
+   | [] -> [(sym, v)]
+   | (sym', v') :: rest  -> if sym = sym'
+                           then (sym, v) :: rest
+                           else insert (rest, sym, v)
 
 
 
