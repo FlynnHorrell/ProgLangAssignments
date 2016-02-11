@@ -207,7 +207,14 @@ let rec lookup (tbl,sym) =
    It should not look any further in the list than is necessary.
    It should have type: 'a table * symbol -> 'a option
 *)
-
+let rec lookup_opt (tbl,sym) = 
+   match tbl with
+   |[] -> None
+   |(sym',v) :: rest -> if sym = sym' 
+                        then Some v
+                        else if sym < sym 
+                        then lookup_opt (rest,sym)
+                        else None
 
 
 (*
