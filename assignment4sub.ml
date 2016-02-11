@@ -99,8 +99,8 @@ let thunk_map (a,fnc) = fun() -> fnc(a())
 let thunk_of_list lst = fun() -> 
    let rec aux lst' = 
       match lst' with
-      |[] -> (fun () -> []) ()
-      |hd :: rest -> (fun () -> hd ()) () :: aux rest
+      | [] -> (fun () -> []) ()
+      | hd :: rest -> (fun () -> hd ()) () :: aux rest
    in aux lst
 
 
@@ -174,10 +174,10 @@ let rec insert (tbl, sym, v) =
 *)
 let rec has (tbl,sym) = 
    match tbl with
-   |[] -> false
-   |(sym',_) :: rest -> if sym > sym' 
-                then false
-                else sym = sym' || has (rest,sym)
+   | [] -> false
+   | (sym',_) :: rest -> if sym > sym' 
+                        then false
+                        else sym = sym' || has (rest,sym)
 
 
 (*
@@ -191,8 +191,8 @@ let rec has (tbl,sym) =
 *)
 let rec lookup (tbl,sym) = 
    match tbl with
-   |[] -> raise Not_found
-   |(sym',v) :: rest -> if sym = sym' 
+   | [] -> raise Not_found
+   | (sym',v) :: rest -> if sym = sym' 
                         then v
                         else if sym < sym 
                         then lookup (rest,sym)
@@ -209,8 +209,8 @@ let rec lookup (tbl,sym) =
 *)
 let rec lookup_opt (tbl,sym) = 
    match tbl with
-   |[] -> None
-   |(sym',v) :: rest -> if sym = sym' 
+   | [] -> None
+   | (sym',v) :: rest -> if sym = sym' 
                         then Some v
                         else if sym < sym 
                         then lookup_opt (rest,sym)
@@ -224,7 +224,12 @@ let rec lookup_opt (tbl,sym) =
    It should not use `has` or any of the other functions.
    It should have type: 'a table * symbol -> 'a table
 *)
-
+let rec delete (tbl, sym) = 
+   match tbl with
+   | [] -> []
+   | (sym', a) :: rest -> if sym = sym' 
+                          then rest
+                          else (sym', a) :: delete (rest, sym)
 
 
 (*
@@ -232,8 +237,10 @@ let rec lookup_opt (tbl,sym) =
    of the keys in the table.
    It should have type: 'a table -> symbol list
 *)
-
-
+let rec keys tbl = 
+   match tbl with
+   | [] -> []
+   | (sym, _) :: rest -> sym:: keys rest
 
 (*
    Write a function `is_proper` that takes as input a symbol table and returns
@@ -241,4 +248,12 @@ let rec lookup_opt (tbl,sym) =
    maintained that they keys appear in strictly increasing order.
    It should have type: 'a table -> bool
 *)
+let rec is_proper tbl = 
+   match tbl with
+   | [] 
+   | _ :: [] -> true
+   | (sym,_) :: (sym',_) :: rest -> if sym > sym'
+                                    then false
+                                    else is_proper rest
+
 
