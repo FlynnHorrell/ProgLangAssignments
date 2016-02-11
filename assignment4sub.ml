@@ -189,8 +189,14 @@ let rec has (tbl,sym) =
    It should not look any further in the list than is necessary.
    It should have type: 'a table * symbol -> 'a
 *)
-
-
+let rec lookup (tbl,sym) = 
+   match tbl with
+   |[] -> raise Not_found
+   |(sym',v) :: rest -> if sym = sym' 
+                        then v
+                        else if sym < sym 
+                        then lookup (rest,sym)
+                        else raise Not_found
 
 (*
    Write a function `lookup_opt` that takes as input a pair of a symbol table and a
