@@ -126,6 +126,11 @@ let rec subst (c1,c2) =
    n = 1, when the result should be the calculation itself.
    It should have type: calc * int -> calc
 *)
+let rec power (c,n) = 
+   match n with
+   | 0 -> Int 1
+   | 1-> c
+   | _ -> Mul (power (c, n-1), c)
 
 
 
