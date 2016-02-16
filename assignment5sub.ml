@@ -47,7 +47,14 @@ type calc = Var
    it. Do NOT use the `count_vars` that follows.
    It should have type calc -> bool
 *)
-
+let rec has_vars c = 
+   match c with 
+   |Var -> true
+   |Int i -> false
+   |Parity c1  -> has_vars c1
+   |Add (c2,c3) -> has_vars c2 || has_vars c3
+   |Mul (c4,c5) -> has_vars c4 || has_vars c5
+   |Sub (c6,c7) -> has_vars c6 || has_vars c7
 
 (*
    Write a function `count_vars` that takes as input a calculation and returns the
