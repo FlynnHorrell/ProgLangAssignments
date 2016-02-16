@@ -77,8 +77,16 @@ let rec count_vars c =
    described above.
    It should have type: calc * int -> int
 *)
-
-
+let rec calc_eval (c,x) = 
+   match c with
+   |Var -> x
+   |Int i -> i
+   |Parity c1 -> if calc_eval(c1,x) mod 2 = 0
+                 then 0
+                 else 1
+   |Add (c2,c3) -> calc_eval (c2,x) + calc_eval (c3,x)
+   |Mul (c4,c5) -> calc_eval (c4,x) * calc_eval (c5,x)
+   |Sub (c6,c7) -> calc_eval (c6,x) - calc_eval (c7,x)
 
 (*
    Write a function `func_of_calc` that takes as input a calculation and returns
