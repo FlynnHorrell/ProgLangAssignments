@@ -145,7 +145,12 @@ let rec power (c,n) =
    - When the coefficient "a" is 1.
    It should have type: int * int -> calc
 *)
-
+let term (a,n) = 
+   match (a,n) with
+   | (0,_) -> Int 0
+   | (_,0) -> Int a
+   | (1,_) -> power(Var,n)
+   | _ -> Mul(Int a,power(Var,n))
 
 (*
    Write a function `poly` that takes as input a list of pairs of integers
