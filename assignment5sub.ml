@@ -225,15 +225,19 @@ let rec poly lst =
 (* This function stub is commented out for now so as not to throw errors when
    you work on the previous part. Delete the comment part when you want to start
    working on this function.
-
+*)
 let rec simplify c =
    let c' =
       match c with
-      | Var -> ...        (* this one's easy *)
-      | Int i -> ...      (* so is this *)
-      | Add ... -> ...    (* special add case here *)
+      | Var -> Var       (* this one's easy *)
+      | Int i -> Int i    (* so is this *)
+      | Add (Int 0,c1) -> simplify c1    (* special add case here *)
+      | Add (c1,Int 0) -> simplify c1
+      | Add (Int c1,Int c2) -> Int(c1+c2)
       | Add (c1, c2) -> Add (simplify c1, simplify c2)
+      | Sub (Int c1,Int c2) -> Int(c1-c2)
+      | Mul (Int c1,Int c2) -> Int(c1*c2)
    (* more cases here. Do not use the catchall *)
    in if c' = c then c' else simplify c'
 
-*)
+
