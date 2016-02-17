@@ -165,6 +165,13 @@ let term (a,n) =
    It should have type: (int * int) list -> calc
 *)
 
+let rec poly lst = 
+   match lst with
+   |[] -> Int 0
+   |(0,_) :: rest -> poly rest
+   |(a,n) :: [] -> term(a,n)
+   |(a,n) :: rest -> Add(term(a,n),poly rest)
+
 
 
 (*
