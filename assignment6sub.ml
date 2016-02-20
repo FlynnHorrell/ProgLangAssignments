@@ -111,8 +111,12 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    in search of the (nonexistent) next value, and that is OK.
    It should have type `'a list -> 'a stream`.
 *)
-
-
+let from_list lst = 
+   let rec aux lst' = match lst' with
+                     |[] -> aux lst
+                     |hd :: rest -> St (fun () -> (hd, aux rest))
+   in aux(lst)
+   
 (* Stream users. These functions take as input a stream, and either produce some value
    or a new stream.
 *)
@@ -121,9 +125,6 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    returns a list of the first n elements of the stream (and the empty list if n<=0).
    It should have type `int -> 'a stream -> 'a list`.
 *)
-let take1 (St th) =      (* Pattern match on the stream variant. *)
-   let (v, st') = th () in v   (* Call the corresponding thunk to get value and the remaining stream *)
-
 let rec take n (St th) = if n <= 0
                         then []
                         else let (v, st') = th () in v :: take (n-1) st'
