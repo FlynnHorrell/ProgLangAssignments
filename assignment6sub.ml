@@ -79,15 +79,14 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    a stream of type `'a stream` that keeps producing that value over and over.
    It should have type `'a -> 'a stream`.
 *)
-
+   let rec const a = St (fun () -> (a, const a))
 
 (*
    Write a function `alt` that takes as input two values of some type `'a` and returns
    a stream of type `'a stream` that keeps alternating between those two values.
    It should have type `'a -> 'a -> 'a stream`.
 *)
-
-
+   let rec alt a b = St (fun () -> (a, alt b a))
 
 (*
    Write a function `seq` that takes as input a start integer `a` and a step `step` and
@@ -121,7 +120,17 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    returns a list of the first n elements of the stream (and the empty list if n<=0).
    It should have type `int -> 'a stream -> 'a list`.
 *)
+let take1 (St th) =      (* Pattern match on the stream variant. *)
+   let (v, st') = th () in v   (* Call the corresponding thunk to get value and the remaining stream *)
 
+let rec take n (St th) = if n <= 0
+                        then []
+                        else let (v, st') = th () in v :: take (n-1) st'
+
+(*let rec take n st = if n <= 0 then []
+                    else let aux (St th) = let (v, st') = th () in (v, st')
+                         in let (v, st') = aux st
+                            in v :: take (n - 1) st'*)
 
 (*
    Write a function `drop` that takes as input a number `n` and a stream `st` and
