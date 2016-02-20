@@ -94,7 +94,7 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    up by step each time.
    It should have type `int -> int -> int stream`
 *)
-
+   let seq a step = let rec aux n = St (fun () -> (a+n*step, aux (n+1))) in aux 0
 
 (*
    Write a function `from_f` that takes as input a function `int -> 'a` and returns
