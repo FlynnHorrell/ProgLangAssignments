@@ -101,6 +101,7 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    an `'a stream` that produces in turn the values f 1, f 2, f 3 and so on.
    It should have type `(int -> 'a) -> 'a stream`.
 *)
+   let from_f f = let rec aux n = St (fun () -> (f n, aux (n+1))) in aux 1
 
 (*
    Write a function `from_list` that takes as input an `'a list` and returns a stream
