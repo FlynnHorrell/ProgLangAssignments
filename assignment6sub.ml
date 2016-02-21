@@ -111,12 +111,12 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    in search of the (nonexistent) next value, and that is OK.
    It should have type `'a list -> 'a stream`.
 *)
-let from_list lst = 
-   let rec aux lst' = match lst' with
-                     |[] -> aux lst
-                     |hd :: rest -> St (fun () -> (hd, aux rest))
-   in aux(lst)
-   
+   let from_list lst = 
+      let rec aux lst' = match lst' with
+                         |[] -> aux lst
+                         |hd :: rest -> St (fun () -> (hd, aux rest))
+      in aux(lst)
+
 (* Stream users. These functions take as input a stream, and either produce some value
    or a new stream.
 *)
@@ -125,14 +125,9 @@ let from_list lst =
    returns a list of the first n elements of the stream (and the empty list if n<=0).
    It should have type `int -> 'a stream -> 'a list`.
 *)
-let rec take n (St th) = if n <= 0
-                        then []
-                        else let (v, st') = th () in v :: take (n-1) st'
-
-(*let rec take n st = if n <= 0 then []
-                    else let aux (St th) = let (v, st') = th () in (v, st')
-                         in let (v, st') = aux st
-                            in v :: take (n - 1) st'*)
+   let rec take n (St th) = if n <= 0
+                            then []
+                            else let (v, st') = th () in v :: take (n-1) st'
 
 (*
    Write a function `drop` that takes as input a number `n` and a stream `st` and
@@ -141,6 +136,11 @@ let rec take n (St th) = if n <= 0
    It should have type `int -> 'a stream -> 'a stream`.
 *)
 
+   let rec drop n st =  if n <= 0 
+                        then st
+                        else let aux (St th) = 
+                                 let (v, st') = th () in st'
+                             in drop (n - 1) (aux st)
 
 (*
    Write a function `prepend` that takes as input a `'a list` and a `'a stream` and
@@ -148,7 +148,9 @@ let rec take n (St th) = if n <= 0
    the provided stream.
    It should have type: `'a list -> 'a stream -> 'a stream`.
 *)
-
+   let rec prepend lst st = match lst with
+                            | [] -> st
+                            | hd :: rest ->  St (fun () -> (hd, prepend rest st))
 
 (*
    Write a function `map` that takes as input a function `'a -> 'b` and a `'a stream`,
