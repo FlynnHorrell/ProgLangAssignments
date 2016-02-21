@@ -173,8 +173,8 @@ let rec pair_up st =
    let aux (St th) = 
       let (v, st') = th () in (v, st')
        in let (v, st') = aux st
-          in let (v2, strm2) = aux st'
-             in St (fun () -> ((v, v2), pair_up strm2))
+          in let (v2, st2) = aux st'
+             in St (fun () -> ((v, v2), pair_up st2))
 
 (*
    Write a function `zip2` that takes as input a `'a stream` and a `'b stream` and
@@ -226,5 +226,10 @@ let rec pair_up st =
    stream like that might run forever in search of the "next value", if for example all
    the lists are empty.
    It should have type: `'a list stream -> 'a stream`,
-*)
-
+*)                             
+                            
+let rec flatten (St th) = let (v,st') = th ()
+                          in let rec aux v' = match v' with
+                             |[] -> flatten st'
+                             |hd :: rest -> St(fun () -> (hd, aux rest))
+                             in aux v
