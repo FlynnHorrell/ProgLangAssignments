@@ -216,12 +216,8 @@ let rec pair_up st =
    then `collect 3 st` is the stream [1;2;3], [4;5;6], [7;8;9], ...
    It should have type `int -> 'a stream -> 'a list stream`.
 *)
-   let rec collect n (St th) = let (v,st') = th () 
+   let rec collect n (St th) = let (v,st') = th ()                        
                                in St(fun () -> (v :: take (n-1) st', collect n st'))
-
-
-
-
 (*
    Write a function `flatten` that takes as input a `'a list stream` and "flattens" it
    out, resulting in the stream that contains all the elements in the order they appear.
