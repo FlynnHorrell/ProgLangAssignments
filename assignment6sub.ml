@@ -136,7 +136,7 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    It should have type `int -> 'a stream -> 'a stream`.
 *)
 
-   let rec drop n (St th) = if n<= 0
+   let rec drop n (St th) = if n <= 0
                             then St th
                             else let (v,st') = th ()
                                  in drop (n-1)st'
@@ -169,13 +169,21 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    It should have type `'a stream -> ('a * 'a) stream`.
 *)
 
+let rec pair_up st = 
+   let aux (St th) = 
+      let (v, st') = th () in (v, st')
+       in let (v, st') = aux st
+          in let (v2, strm2) = aux st'
+             in St (fun () -> ((v, v2), pair_up strm2))
 
 (*
    Write a function `zip2` that takes as input a `'a stream` and a `'b stream` and
    returns a `('a * 'b) stream` by pairing together the corresponding values.
    It should have type `'a stream -> 'b stream -> ('a * 'b) stream`.
 *)
-
+   let rec zip2 (St th) (St th2) =
+      let ((v, st'),(v2, st2)) = (th (),th2 ())
+          in St (fun () -> ((v, v2), zip2 st' (st2)))
 
 (*
    Write a function `accum` that takes as input a function `'b -> 'a -> 'b`, an initial
