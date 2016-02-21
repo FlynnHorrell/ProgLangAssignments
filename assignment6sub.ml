@@ -193,8 +193,9 @@ let rec pair_up st =
    then the resulting stream would be 5, 6, 8, 11, 15, 20, ...
    It should have type `('b -> 'a -> 'b) -> 'b -> 'a stream -> 'b stream`.
 *)
-
-
+   let rec accum f b (St th) = let (v,st') = th () 
+                               in St(fun() -> (b, accum f (f b v) st'))
+  
 (*
    Write a function `filter` that takes as input a predicate function `'a -> bool` and
    a `'a stream`, and returns a `'a stream` of those values that are true. For instance
