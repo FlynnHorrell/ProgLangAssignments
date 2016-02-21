@@ -205,8 +205,10 @@ let rec pair_up st =
    value, if for example the predicate returns always false.
    It should have type `('a -> bool) -> 'a stream -> 'a stream`.
 *)
-
-
+   let rec filter f (St th) = let (v,st') = th() 
+                              in if f v
+                                 then St(fun () -> v,filter f st')
+                                 else filter f st'
 (*
    Write a function `collect` that takes as input an integer `n > 0` and a `'a stream`
    and returns a `'a list stream` where each value is formed out of taking the next `n`
