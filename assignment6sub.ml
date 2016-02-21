@@ -136,11 +136,10 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    It should have type `int -> 'a stream -> 'a stream`.
 *)
 
-   let rec drop n st =  if n <= 0 
-                        then st
-                        else let aux (St th) = 
-                                 let (v, st') = th () in st'
-                             in drop (n - 1) (aux st)
+   let rec drop n (St th) = if n<= 0
+                            then St th
+                            else let (v,st') = th ()
+                                 in drop (n-1)st'
 
 (*
    Write a function `prepend` that takes as input a `'a list` and a `'a stream` and
@@ -160,8 +159,8 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    be 1, 4, 9, ...
    It should have type `('a -> 'b) -> 'a stream -> 'b stream`.
 *)
-
-
+   let rec map f (St th) = let (v,st') = th() 
+                           in St(fun () -> (f v,map f st'))
 (*
    Write a function `pair_up` that takes as input a `'a stream` and returns a
    `('a * 'a) stream` whose values are consecutive pairs of values from the original
