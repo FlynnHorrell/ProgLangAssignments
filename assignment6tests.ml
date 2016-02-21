@@ -4,6 +4,9 @@ let t1b = take 1 (const 1) = [1]
 let t1c = take 0 (const 6) = []
 
 let t2a = take 5 (alt 3 4) = [3; 4; 3; 4; 3]
+let t2b = take 0 (alt 3 4) = []
+let t2c = take 1 (alt 1 2) = [1]
+let t2d = take 4 (alt 1 2) = [1;2;1;2]
 
 let t3a = take 3 (seq 2 6) = [2; 8; 14]
 
