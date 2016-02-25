@@ -17,6 +17,7 @@ let rec range a b = if a > b then [] else a :: range (a + 1) b
 
 let range1 n = range 1 n
 
+let tabulate f n = List.map f (range1 n) 
 (* ---------------------------------
               PICTURES
    ---------------------------------
@@ -51,7 +52,14 @@ let sword = [
 (*
    You need to fix this.
 *)
-let doodad = []
+let doodad = [
+             [H;H;H;H;H;H;H];
+             [H;H;H;H;H;H;H];
+             [H;H;H;H;H;H;H];
+             [H;H;H;H;H;H;H];
+             [H;H;H;H;H;H;H];
+             [H;H;H;H;H;H;H];
+             [H;H;H;H;H;H;H]]
 
 (*
    These two functions provided to you. Study how they work before continuing!
@@ -69,3 +77,10 @@ let dims_pic pic =
 (*
    Add your other functions here
 *)
+
+let string_of_pxl pxl = match pxl with
+                        |D -> "."
+                        |H -> "#"
+
+
+
