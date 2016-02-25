@@ -79,14 +79,23 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    a stream of type `'a stream` that keeps producing that value over and over.
    It should have type `'a -> 'a stream`.
 *)
+<<<<<<< HEAD
    let rec const a = St (fun () -> (a, const a))
+=======
+
+>>>>>>> instr/master
 
 (*
    Write a function `alt` that takes as input two values of some type `'a` and returns
    a stream of type `'a stream` that keeps alternating between those two values.
    It should have type `'a -> 'a -> 'a stream`.
 *)
+<<<<<<< HEAD
    let rec alt a b = St (fun () -> (a, alt b a))
+=======
+
+
+>>>>>>> instr/master
 
 (*
    Write a function `seq` that takes as input a start integer `a` and a step `step` and
@@ -94,14 +103,21 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    up by step each time.
    It should have type `int -> int -> int stream`
 *)
+<<<<<<< HEAD
    let seq a step = let rec aux n = St (fun () -> (a+n*step, aux (n+1))) in aux 0
+=======
+
+>>>>>>> instr/master
 
 (*
    Write a function `from_f` that takes as input a function `int -> 'a` and returns
    an `'a stream` that produces in turn the values f 1, f 2, f 3 and so on.
    It should have type `(int -> 'a) -> 'a stream`.
 *)
+<<<<<<< HEAD
    let from_f f = let rec aux n = St (fun () -> (f n, aux (n+1))) in aux 1
+=======
+>>>>>>> instr/master
 
 (*
    Write a function `from_list` that takes as input an `'a list` and returns a stream
@@ -111,11 +127,15 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    in search of the (nonexistent) next value, and that is OK.
    It should have type `'a list -> 'a stream`.
 *)
+<<<<<<< HEAD
    let from_list lst = 
       let rec aux lst' = match lst' with
                          |[] -> aux lst
                          |hd :: rest -> St (fun () -> (hd, aux rest))
       in aux(lst)
+=======
+
+>>>>>>> instr/master
 
 (* Stream users. These functions take as input a stream, and either produce some value
    or a new stream.
@@ -125,9 +145,13 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    returns a list of the first n elements of the stream (and the empty list if n<=0).
    It should have type `int -> 'a stream -> 'a list`.
 *)
+<<<<<<< HEAD
    let rec take n (St th) = if n <= 0
                             then []
                             else let (v, st') = th () in v :: take (n-1) st'
+=======
+
+>>>>>>> instr/master
 
 (*
    Write a function `drop` that takes as input a number `n` and a stream `st` and
@@ -136,10 +160,13 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    It should have type `int -> 'a stream -> 'a stream`.
 *)
 
+<<<<<<< HEAD
    let rec drop n (St th) = if n <= 0
                             then St th
                             else let (v,st') = th ()
                                  in drop (n-1)st'
+=======
+>>>>>>> instr/master
 
 (*
    Write a function `prepend` that takes as input a `'a list` and a `'a stream` and
@@ -147,9 +174,13 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    the provided stream.
    It should have type: `'a list -> 'a stream -> 'a stream`.
 *)
+<<<<<<< HEAD
    let rec prepend lst st = match lst with
                             | [] -> st
                             | hd :: rest ->  St (fun () -> (hd, prepend rest st))
+=======
+
+>>>>>>> instr/master
 
 (*
    Write a function `map` that takes as input a function `'a -> 'b` and a `'a stream`,
@@ -159,8 +190,13 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    be 1, 4, 9, ...
    It should have type `('a -> 'b) -> 'a stream -> 'b stream`.
 *)
+<<<<<<< HEAD
    let rec map f (St th) = let (v,st') = th() 
                            in St(fun () -> (f v,map f st'))
+=======
+
+
+>>>>>>> instr/master
 (*
    Write a function `pair_up` that takes as input a `'a stream` and returns a
    `('a * 'a) stream` whose values are consecutive pairs of values from the original
@@ -169,21 +205,28 @@ let take1 (St th) =      (* Pattern match on the stream variant. *)
    It should have type `'a stream -> ('a * 'a) stream`.
 *)
 
+<<<<<<< HEAD
 let rec pair_up st = 
    let aux (St th) = 
       let (v, st') = th () in (v, st')
        in let (v, st') = aux st
           in let (v2, st2) = aux st'
              in St (fun () -> ((v, v2), pair_up st2))
+=======
+>>>>>>> instr/master
 
 (*
    Write a function `zip2` that takes as input a `'a stream` and a `'b stream` and
    returns a `('a * 'b) stream` by pairing together the corresponding values.
    It should have type `'a stream -> 'b stream -> ('a * 'b) stream`.
 *)
+<<<<<<< HEAD
    let rec zip2 (St th) (St th2) =
       let ((v, st'),(v2, st2)) = (th (),th2 ())
           in St (fun () -> ((v, v2), zip2 st' (st2)))
+=======
+
+>>>>>>> instr/master
 
 (*
    Write a function `accum` that takes as input a function `'b -> 'a -> 'b`, an initial
@@ -193,9 +236,14 @@ let rec pair_up st =
    then the resulting stream would be 5, 6, 8, 11, 15, 20, ...
    It should have type `('b -> 'a -> 'b) -> 'b -> 'a stream -> 'b stream`.
 *)
+<<<<<<< HEAD
    let rec accum f b (St th) = let (v,st') = th () 
                                in St(fun() -> (b, accum f (f b v) st'))
   
+=======
+
+
+>>>>>>> instr/master
 (*
    Write a function `filter` that takes as input a predicate function `'a -> bool` and
    a `'a stream`, and returns a `'a stream` of those values that are true. For instance
@@ -205,10 +253,15 @@ let rec pair_up st =
    value, if for example the predicate returns always false.
    It should have type `('a -> bool) -> 'a stream -> 'a stream`.
 *)
+<<<<<<< HEAD
    let rec filter f (St th) = let (v,st') = th() 
                               in if f v
                                  then St(fun () -> v,filter f st')
                                  else filter f st'
+=======
+
+
+>>>>>>> instr/master
 (*
    Write a function `collect` that takes as input an integer `n > 0` and a `'a stream`
    and returns a `'a list stream` where each value is formed out of taking the next `n`
@@ -216,8 +269,13 @@ let rec pair_up st =
    then `collect 3 st` is the stream [1;2;3], [4;5;6], [7;8;9], ...
    It should have type `int -> 'a stream -> 'a list stream`.
 *)
+<<<<<<< HEAD
    let rec collect n (St th) = let (v,st') = th ()                                          
                                in St(fun () -> (v :: take (n-1) st', collect n (drop (n-1) st')))
+=======
+
+
+>>>>>>> instr/master
 (*
    Write a function `flatten` that takes as input a `'a list stream` and "flattens" it
    out, resulting in the stream that contains all the elements in the order they appear.
@@ -226,6 +284,7 @@ let rec pair_up st =
    stream like that might run forever in search of the "next value", if for example all
    the lists are empty.
    It should have type: `'a list stream -> 'a stream`,
+<<<<<<< HEAD
 *)                             
                             
 let rec flatten (St th) = let (v,st') = th ()
@@ -233,3 +292,41 @@ let rec flatten (St th) = let (v,st') = th ()
                              |[] -> flatten st'
                              |hd :: rest -> St(fun () -> (hd, aux rest))
                              in aux v
+=======
+*)
+
+
+(*
+   Write a function `list_combos` that takes as input a `'a stream` st1 and a `'b stream`,
+   st2 and produces a `('a * 'b) list stream` st as follows: The n-th value of the result
+   stream st will consist a list of all pairs `(x, y)` where `x` is the i-th element of the
+   st1 and `y` is the j-th element of st2, and so that i + j = n + 1. So if st1 consists of
+   the elements a1,a2,a3,... and st2 consists of b1,b2,b3,... then the result stream will
+   have as its first element the 1-element list [(a1, b1)], as its second element the two-
+   element list [(a2, b1); (a1, b2)], as its third element the three-element list
+   [(a3, b1); (a2, b2); (a1, b3)] and so on. You will probably find it convenient to use a
+   function that builds the "next state of the stream" by taking as inputs the lists
+   [a_n; a_n-1; ...; a2; a1] and [b_n; b_n-1; ...; b2; b1] of the "elements seen so far"
+   and also the current states of the provided streams (which when called would give the
+   next entries a_n+1 and b_n+1). It then expands these lists by providing the next entries,
+   uses List.rev and List.combine to create the list to be returned, and creates the appropriate
+   call to itself to use as the next stream.
+   This one is a bit harder. Make sure to check:
+   http://caml.inria.fr/pub/docs/manual-ocaml/libref/List.html
+   for the documentation on the methods List.rev and List.combine.
+   Reference solution is 7 lines.
+   It should have type: 'a stream -> 'b stream -> ('a * 'b) list stream
+*)
+
+
+
+(*
+   Write a function `list_combos_flat` that takes the same inputs as `list_combos` but
+   instead returns the individual pairs as results, rather than lists. It should be simply a
+   combination of `list_combos` together with the earlier method `flatten`. A very short
+   solution.
+   It should have type: 'a stream -> 'b stream -> ('a * 'b) stream
+*)
+
+
+>>>>>>> instr/master

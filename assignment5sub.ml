@@ -47,6 +47,7 @@ type calc = Var
    it. Do NOT use the `count_vars` that follows.
    It should have type calc -> bool
 *)
+<<<<<<< HEAD
 let rec has_vars c = 
    match c with 
    |Var -> true
@@ -55,12 +56,16 @@ let rec has_vars c =
    |Add (c2,c3) -> has_vars c2 || has_vars c3
    |Mul (c4,c5) -> has_vars c4 || has_vars c5
    |Sub (c6,c7) -> has_vars c6 || has_vars c7
+=======
+
+>>>>>>> instr/master
 
 (*
    Write a function `count_vars` that takes as input a calculation and returns the
    number of references to the variable in that calculation. Do NOT use `has_vars`.
    It should have type: calc -> int
 *)
+<<<<<<< HEAD
 let rec count_vars c = 
    match c with
    |Var -> 1
@@ -69,6 +74,8 @@ let rec count_vars c =
    |Add (c2,c3) -> count_vars c2 + count_vars c3
    |Mul (c4,c5) -> count_vars c4 + count_vars c5
    |Sub (c6,c7) -> count_vars c6 + count_vars c7
+=======
+>>>>>>> instr/master
 
 
 (*
@@ -77,6 +84,7 @@ let rec count_vars c =
    described above.
    It should have type: calc * int -> int
 *)
+<<<<<<< HEAD
 let rec calc_eval (c,x) = 
    match c with
    |Var -> x
@@ -87,6 +95,10 @@ let rec calc_eval (c,x) =
    |Add (c2,c3) -> calc_eval (c2,x) + calc_eval (c3,x)
    |Mul (c4,c5) -> calc_eval (c4,x) * calc_eval (c5,x)
    |Sub (c6,c7) -> calc_eval (c6,x) - calc_eval (c7,x)
+=======
+
+
+>>>>>>> instr/master
 
 (*
    Write a function `func_of_calc` that takes as input a calculation and returns
@@ -96,7 +108,11 @@ let rec calc_eval (c,x) =
    It should have type: calc -> (int -> int)
    (though the parentheses will not show)
 *)
+<<<<<<< HEAD
 let func_of_calc c = fun x -> calc_eval(c,x)
+=======
+
+>>>>>>> instr/master
 
 
 (*
@@ -105,6 +121,7 @@ let func_of_calc c = fun x -> calc_eval(c,x)
    the variable in c2 with c1.
    It should have type: calc * calc -> calc
 *)
+<<<<<<< HEAD
 let rec subst (c1,c2) = 
    match c2 with
    |Var -> c1
@@ -113,6 +130,9 @@ let rec subst (c1,c2) =
    |Add (c4,c5) -> Add (subst(c1,c4),subst(c1,c5))
    |Mul (c6,c7) -> Mul (subst(c1,c6),subst(c1,c7))
    |Sub (c8,c9) -> Sub (subst(c1,c8),subst(c1,c9))
+=======
+
+>>>>>>> instr/master
 
 
 (*
@@ -126,11 +146,14 @@ let rec subst (c1,c2) =
    n = 1, when the result should be the calculation itself.
    It should have type: calc * int -> calc
 *)
+<<<<<<< HEAD
 let rec power (c,n) = 
    match n with
    | 0 -> Int 1
    | 1-> c
    | _ -> Mul (power (c, n-1), c)
+=======
+>>>>>>> instr/master
 
 
 
@@ -145,12 +168,16 @@ let rec power (c,n) =
    - When the coefficient "a" is 1.
    It should have type: int * int -> calc
 *)
+<<<<<<< HEAD
 let term (a,n) = 
    match (a,n) with
    | (0,_) -> Int 0
    | (_,0) -> Int a
    | (1,_) -> power(Var,n)
    | _ -> Mul(Int a,power(Var,n))
+=======
+
+>>>>>>> instr/master
 
 (*
    Write a function `poly` that takes as input a list of pairs of integers
@@ -161,6 +188,7 @@ let term (a,n) =
    - The empty list should result in the integer 0.
    - A non-empty list should NOT have an extra "+0" at the end. You will need to
    stop the recursion at a one-element list.
+<<<<<<< HEAD
    - If a "term" has zero coefficient, it should be skipped.
    It should have type: (int * int) list -> calc
 *)
@@ -172,6 +200,18 @@ let rec poly lst =
    |(a,n) :: [] -> term(a,n)
    |(a,n) :: rest -> Add(term(a,n),poly rest)
 
+=======
+   - If a "term" has zero coefficient, it should be skipped. But if all terms have
+   zero coefficient you should still be getting a "Int 0". The cleanest way to
+   ensure this behavior is to "remove a term with a zero coefficient if it is not
+   the first term in the list, or if it is the first term but followed by a
+   non-zero term".
+   You can do this problem with recursion and a single pattern match with about 6
+   cases.
+   It should have type: (int * int) list -> calc
+*)
+
+>>>>>>> instr/master
 
 
 (*
@@ -225,6 +265,7 @@ let rec poly lst =
 (* This function stub is commented out for now so as not to throw errors when
    you work on the previous part. Delete the comment part when you want to start
    working on this function.
+<<<<<<< HEAD
 *)
 let rec simplify c =
    let c' =
@@ -241,3 +282,17 @@ let rec simplify c =
    in if c' = c then c' else simplify c'
 
 
+=======
+
+let rec simplify c =
+   let c' =
+      match c with
+      | Var -> ...        (* this one's easy *)
+      | Int i -> ...      (* so is this *)
+      | Add ... -> ...    (* special add case here *)
+      | Add (c1, c2) -> Add (simplify c1, simplify c2)
+   (* more cases here. Do not use the catchall *)
+   in if c' = c then c' else simplify c'
+
+*)
+>>>>>>> instr/master

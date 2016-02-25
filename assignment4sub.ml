@@ -33,7 +33,10 @@ type 'a thunk = unit -> 'a
    and returns the `'a thunk` from it. This is an incredibly simple function.
    It should have type: (unit -> 'a) -> 'a thunk
 *)
+<<<<<<< HEAD
 let thunk a = a
+=======
+>>>>>>> instr/master
 
 
 
@@ -43,7 +46,11 @@ let thunk a = a
    simple function.
    Should have type: 'a -> 'a thunk
 *)
+<<<<<<< HEAD
 let thunk_of_value a = fun() -> a
+=======
+
+>>>>>>> instr/master
 
 
 (*
@@ -53,7 +60,11 @@ let thunk_of_value a = fun() -> a
    is not applied until the thunk is evaluated.
    It should have type: ('a -> 'b) * 'a -> 'a thunk
 *)
+<<<<<<< HEAD
 let thunk_of_eval (f,a)= fun() -> f a
+=======
+
+>>>>>>> instr/master
 
 
 
@@ -65,7 +76,12 @@ let thunk_of_eval (f,a)= fun() -> f a
    after the "with" is a pattern.
    It should have type: 'a thunk -> 'a option
 *)
+<<<<<<< HEAD
 let try_thunk a = try Some (a()) with | Failure _ -> None
+=======
+
+
+>>>>>>> instr/master
 
 (*
    Write a function `thunk_of_pair` that takes as input a pair of thunks, and returns
@@ -74,7 +90,11 @@ let try_thunk a = try Some (a()) with | Failure _ -> None
    returned thunk is called.
    It should have type: 'a thunk * 'b thunk -> ('a * 'b) thunk
 *)
+<<<<<<< HEAD
 let thunk_of_pair (a,b) = fun() -> (a(),b())
+=======
+
+>>>>>>> instr/master
 
 
 (*
@@ -85,7 +105,11 @@ let thunk_of_pair (a,b) = fun() -> (a(),b())
    the returned thunk is called.
    It should have type: 'a thunk * ('a -> 'b) -> 'b thunk
 *)
+<<<<<<< HEAD
 let thunk_map (a,fnc) = fun() -> fnc(a())
+=======
+
+>>>>>>> instr/master
 
 
 (*
@@ -96,12 +120,15 @@ let thunk_map (a,fnc) = fun() -> fnc(a())
    called.
    It should have type: 'a thunk list -> 'a list thunk
 *)
+<<<<<<< HEAD
 let thunk_of_list lst = fun() -> 
    let rec aux lst' = 
       match lst' with
       | [] -> (fun () -> []) ()
       | hd :: rest -> (fun () -> hd ()) () :: aux rest
    in aux lst
+=======
+>>>>>>> instr/master
 
 
 
@@ -155,6 +182,7 @@ let empty : 'a table = []   (* A more intuitive notation for the empty list/tabl
    insert (empty, "foo", 3) = [("foo", 3)]
    It should have type: 'a table * symbol * 'a -> 'a table
 *)
+<<<<<<< HEAD
 let rec insert (tbl, sym, v) = 
    match tbl with
    | [] -> [(sym, v)]
@@ -163,6 +191,9 @@ let rec insert (tbl, sym, v) =
                             else if sym < sym' 
                             then (sym,v) :: insert (rest, sym', v')
                             else (sym',v') :: insert(rest,sym,v)
+=======
+
+>>>>>>> instr/master
 
 
 (*
@@ -173,12 +204,16 @@ let rec insert (tbl, sym, v) =
    keys are bigger than the searched-for key there is no need to continue the search.
    It should have type: 'a table * symbol -> bool
 *)
+<<<<<<< HEAD
 let rec has (tbl,sym) = 
    match tbl with
    | [] -> false
    | (sym',_) :: rest -> if sym > sym' 
                         then false
                         else sym = sym' || has (rest,sym)
+=======
+
+>>>>>>> instr/master
 
 
 (*
@@ -190,6 +225,7 @@ let rec has (tbl,sym) =
    It should not look any further in the list than is necessary.
    It should have type: 'a table * symbol -> 'a
 *)
+<<<<<<< HEAD
 let rec lookup (tbl,sym) = 
    match tbl with
    | [] -> raise Not_found
@@ -198,6 +234,10 @@ let rec lookup (tbl,sym) =
                         else if sym < sym 
                         then lookup (rest,sym)
                         else raise Not_found
+=======
+
+
+>>>>>>> instr/master
 
 (*
    Write a function `lookup_opt` that takes as input a pair of a symbol table and a
@@ -208,6 +248,7 @@ let rec lookup (tbl,sym) =
    It should not look any further in the list than is necessary.
    It should have type: 'a table * symbol -> 'a option
 *)
+<<<<<<< HEAD
 let rec lookup_opt (tbl,sym) = 
    match tbl with
    | [] -> None
@@ -216,6 +257,9 @@ let rec lookup_opt (tbl,sym) =
                         else if sym < sym 
                         then lookup_opt (rest,sym)
                         else None
+=======
+
+>>>>>>> instr/master
 
 
 (*
@@ -225,12 +269,16 @@ let rec lookup_opt (tbl,sym) =
    It should not use `has` or any of the other functions.
    It should have type: 'a table * symbol -> 'a table
 *)
+<<<<<<< HEAD
 let rec delete (tbl, sym) = 
    match tbl with
    | [] -> []
    | (sym', a) :: rest -> if sym = sym' 
                           then rest
                           else (sym', a) :: delete (rest, sym)
+=======
+
+>>>>>>> instr/master
 
 
 (*
@@ -238,10 +286,15 @@ let rec delete (tbl, sym) =
    of the keys in the table.
    It should have type: 'a table -> symbol list
 *)
+<<<<<<< HEAD
 let rec keys tbl = 
    match tbl with
    | [] -> []
    | (sym, _) :: rest -> sym:: keys rest
+=======
+
+
+>>>>>>> instr/master
 
 (*
    Write a function `is_proper` that takes as input a symbol table and returns
@@ -249,6 +302,7 @@ let rec keys tbl =
    maintained that they keys appear in strictly increasing order.
    It should have type: 'a table -> bool
 *)
+<<<<<<< HEAD
 let rec is_proper tbl = 
    match tbl with
    | [] 
@@ -257,4 +311,6 @@ let rec is_proper tbl =
                                     then false
                                     else is_proper rest
 
+=======
+>>>>>>> instr/master
 
