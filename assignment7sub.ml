@@ -84,3 +84,4 @@ let string_of_pxl pxl = match pxl with
 
 let string_of_row r = List.fold_right (fun pxl acc -> (string_of_pxl pxl) ^ acc) r "\n"
 
+let string_of_pic p = List.fold_right (fun row acc -> (string_of_row row) ^ acc) p ""
