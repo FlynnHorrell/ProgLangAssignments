@@ -82,5 +82,5 @@ let string_of_pxl pxl = match pxl with
                         |D -> "."
                         |H -> "#"
 
-
+let string_of_row r = List.fold_right (fun pxl acc -> (string_of_pxl pxl) ^ acc) r "\n"
 
