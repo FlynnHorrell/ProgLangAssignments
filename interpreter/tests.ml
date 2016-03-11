@@ -24,3 +24,12 @@ let t1d = desugar (BoolS false) = BoolC false
 
 let t2a = evaluate (IfC (BoolC true, NumC 2.3, NumC 4.3)) = Num 2.3
 let t2b = evaluate (IfC (IfC (BoolC false, BoolC false, BoolC true), NumC 2.7, NumC 4.3)) = Num 2.7
+let t2c = desugar (IfS (BoolS true, NumS 2.3, NumS 4.3)) = IfC(BoolC true, NumC 2.3, NumC 4.3)
+let t2d = evaluate (desugar (NotS (BoolS true))) = Bool false
+let t2e = evaluate (desugar (NotS (BoolS false))) = Bool true
+let t2f = evaluate (desugar (OrS (BoolS true, BoolS true))) = Bool true
+let t2g = evaluate (desugar (OrS (BoolS false, BoolS true))) = Bool true
+let t2h = evaluate (desugar (OrS (BoolS false, BoolS false))) = Bool false
+let t2i = evaluate (desugar (AndS (BoolS false, BoolS true))) = Bool false
+let t2j = evaluate (desugar (AndS (BoolS true, BoolS false))) = Bool false
+let t2k = evaluate (desugar (AndS (BoolS true, BoolS true))) = Bool true
