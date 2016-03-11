@@ -3,6 +3,7 @@
 %}
 
 %token <float> FLOAT
+%token TRUE FALSE
 %token DBLSEMI
 %nonassoc FLOAT
 

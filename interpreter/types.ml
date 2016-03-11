@@ -3,6 +3,7 @@ exception Interp of string       (* Use for interpreter errors *)
 
 (* You will need to add more cases here. *)
 type exprS = NumS of float
+            |BoolS of bool
 
 (* You will need to add more cases here. *)
 type exprC = NumC of float
@@ -35,6 +36,7 @@ let bind str v env = (str, v) :: env
 (* desugar : exprS -> exprC *)
 let rec desugar exprS = match exprS with
   | NumS i        -> NumC i
+  | BoolS b       -> BoolC b
 
 (* You will need to add cases here. *)
 (* interp : Value env -> exprC -> value *)
