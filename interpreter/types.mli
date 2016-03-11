@@ -11,6 +11,7 @@ type exprS = NumS of float
 type exprC = NumC of float
 			|BoolC of bool
 			|IfC of exprC * exprC * exprC
+			|ArithC of string * exprC * exprC
 
 type value = Num of float
 			 |Bool of bool

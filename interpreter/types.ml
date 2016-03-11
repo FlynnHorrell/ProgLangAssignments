@@ -13,6 +13,7 @@ type exprS = NumS of float
 type exprC = NumC of float
 			|BoolC of bool 
       |IfC of exprC * exprC * exprC
+      |ArithC of string * exprC * exprC
 
 
 (* You will need to add more cases here. *)
@@ -35,6 +36,19 @@ let bind str v env = (str, v) :: env
    You may be asked to add methods here. You may also choose to add your own
    helper methods here.
 *)
+
+let arithEval op v1 v2 = 
+  match (v1, v2) with
+  | (Num x, Num y) -> (match op with 
+                        | "+" -> Num (x +. y)
+                        | "-" -> Num (x -. y)
+                        | "*" -> Num (x *. y)
+                        | "/" -> if b = 0.
+                                 then raise (Interp "Division by Zero")
+                                 else Num (x /. y)
+                        | _ -> raise (Interp "Not an operator"))
+  | _ -> raise (Interp "Not a Num")
+
 (* INTERPRETER *)
 
 (* You will need to add cases here. *)
@@ -58,6 +72,7 @@ let rec interp env r = match r with
      | Bool true -> interp env op1
      | Bool false -> interp env op2
      | _ -> raise (Interp "Not a Bool")) 
+  | ArithC op v1 v2 -> 
 
 (* evaluate : exprC -> val *)
 let evaluate exprC = exprC |> interp []

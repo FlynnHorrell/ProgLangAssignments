@@ -23,11 +23,11 @@ rule token = parse
   | float as x  { FLOAT (float_of_string x) }
   | true        { TRUE }
   | false       { FALSE }
-  | eof         { raise Eof }
-  | any         { raise Unrecognized }
   | "if" 		{ IF }
   | "then"		{ THEN }
   | "else"		{ ELSE }
   | "or"		{ OR }
   | "and" 		{ AND }
   | "not" 		{ NOT }
+  | eof         { raise Eof }
+  | any         { raise Unrecognized }
