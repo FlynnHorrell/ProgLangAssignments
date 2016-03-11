@@ -21,3 +21,6 @@ let t1a = evaluate (BoolC true) = Bool true
 let t1b = evaluate (BoolC false) = Bool false
 let t1c = desugar (BoolS true) = BoolC true
 let t1d = desugar (BoolS false) = BoolC false
+
+let t2a = evaluate (IfC (BoolC true, NumC 2.3, NumC 4.3)) = Num 2.3
+let t2b = evaluate (IfC (IfC (BoolC false, BoolC false, BoolC true), NumC 2.7, NumC 4.3)) = Num 2.7

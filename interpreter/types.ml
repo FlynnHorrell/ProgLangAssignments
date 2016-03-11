@@ -8,6 +8,7 @@ type exprS = NumS of float
 (* You will need to add more cases here. *)
 type exprC = NumC of float
 			|BoolC of bool 
+      |IfC of exprC * exprC * exprC
 
 
 (* You will need to add more cases here. *)
@@ -43,6 +44,11 @@ let rec desugar exprS = match exprS with
 let rec interp env r = match r with
   | NumC i        -> Num i
   | BoolC b 	  -> Bool b
+  | IfC (test, op1, op2 ) -> 
+     (match (interp env test) with 
+     | Bool true -> interp env op1
+     | Bool false -> interp env op2
+     | _ -> raise (Interp "Not a Bool")) 
 
 (* evaluate : exprC -> val *)
 let evaluate exprC = exprC |> interp []
