@@ -43,7 +43,7 @@ let arithEval op v1 v2 =
                         | "+" -> Num (x +. y)
                         | "-" -> Num (x -. y)
                         | "*" -> Num (x *. y)
-                        | "/" -> if b = 0.
+                        | "/" -> if y = 0.
                                  then raise (Interp "Division by Zero")
                                  else Num (x /. y)
                         | _ -> raise (Interp "Not an operator"))
@@ -72,7 +72,7 @@ let rec interp env r = match r with
      | Bool true -> interp env op1
      | Bool false -> interp env op2
      | _ -> raise (Interp "Not a Bool")) 
-  | ArithC op v1 v2 -> 
+  | ArithC (op, v1, v2) -> arithEval op (interp env v1) (interp env v2)
 
 (* evaluate : exprC -> val *)
 let evaluate exprC = exprC |> interp []
