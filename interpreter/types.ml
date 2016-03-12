@@ -17,6 +17,7 @@ type exprC = NumC of float
       |IfC of exprC * exprC * exprC
       |ArithC of string * exprC * exprC
       |CompC of string * exprC * exprC
+      |EqC of exprC * exprC
 
 
 (* You will need to add more cases here. *)
@@ -62,7 +63,11 @@ let compEval op v1 v2 =
                        | _ -> raise (Interp "Not an operator"))
   | _ -> raise (Interp "Not a Num")
 
-
+let eqVal v1 v2 = 
+  match (v1,v2) with
+  | (Num x, Num y) -> Bool (x = y)
+  | (Bool b1, Bool b2) -> Bool (b1 = b2)
+  | _ -> Bool false
 
 
 
@@ -93,6 +98,7 @@ let rec interp env r = match r with
      | _ -> raise (Interp "Not a Bool")) 
   | ArithC (op, v1, v2) -> arithEval op (interp env v1) (interp env v2)
   | CompC (op, v1, v2) -> compEval op (interp env v1) (interp env v2)
+  | EqC (v1, v2) -> eqVal (interp env v1) (interp env v2)
 
 (* evaluate : exprC -> val *)
 let evaluate exprC = exprC |> interp []
@@ -103,4 +109,4 @@ let evaluate exprC = exprC |> interp []
 (* You will need to add cases to this function as you add new value types. *)
 let rec valToString r = match r with
   | Num i           -> string_of_float i
-  | Bool b 			-> string_of_bool b
+  | Bool b 			    -> string_of_bool b

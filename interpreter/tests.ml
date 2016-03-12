@@ -49,3 +49,9 @@ let t4f = evaluate (CompC ("<", NumC 0., NumC 1.)) = Bool true
 let t4g = evaluate (CompC ("<=", NumC 20., NumC 100.)) = Bool true 
 let t4h = evaluate (CompC ("<=", NumC 20., NumC 1.)) = Bool false
 let t4i = desugar (CompS (">", NumS 1., NumS 1.)) = CompC(">", NumC 1., NumC 1.)
+
+let t5a = evaluate (EqC (NumC 20., NumC 20.)) = Bool true 
+let t5b = evaluate (EqC (NumC 220., NumC 20.)) = Bool false
+let t5c = evaluate (EqC (BoolC false, BoolC false)) = Bool true 
+let t5d = evaluate (EqC (BoolC true, BoolC true)) = Bool true
+let t5e = evaluate (EqC (NumC 20., BoolC true)) = Bool false
