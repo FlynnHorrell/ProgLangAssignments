@@ -38,3 +38,4 @@ let t3a = evaluate (ArithC ("+", NumC 1., NumC 1.)) = Num 2.
 let t3b = evaluate (ArithC ("-" , NumC 2. , NumC 1.)) = Num 1.
 let t3c = evaluate (ArithC ("*" , NumC 5. , NumC 5.)) = Num 25.
 let t3d = evaluate (ArithC ("/" , NumC 10. , NumC 1.)) = Num 10.
+let t3e = desugar (ArithS ("+", NumS 1., NumS 1.)) = ArithC("+", NumC 1., NumC 1.)
