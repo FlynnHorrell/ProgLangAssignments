@@ -48,3 +48,4 @@ let t4e = evaluate (CompC ("<", NumC 1., NumC 1.)) = Bool false
 let t4f = evaluate (CompC ("<", NumC 0., NumC 1.)) = Bool true 
 let t4g = evaluate (CompC ("<=", NumC 20., NumC 100.)) = Bool true 
 let t4h = evaluate (CompC ("<=", NumC 20., NumC 1.)) = Bool false
+let t4i = desugar (CompS (">", NumS 1., NumS 1.)) = CompC(">", NumC 1., NumC 1.)

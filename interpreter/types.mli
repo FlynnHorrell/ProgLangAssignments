@@ -8,6 +8,7 @@ type exprS = NumS of float
             |AndS of exprS * exprS
             |NotS of exprS 
             |ArithS of string * exprS * exprS
+            |CompS of string * exprS * exprS
 
 type exprC = NumC of float
 			|BoolC of bool

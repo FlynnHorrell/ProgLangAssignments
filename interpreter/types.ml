@@ -9,6 +9,7 @@ type exprS = NumS of float
             |AndS of exprS * exprS
             |NotS of exprS 
             |ArithS of string * exprS * exprS
+            |CompS of string * exprS * exprS
 
 (* You will need to add more cases here. *)
 type exprC = NumC of float
@@ -77,6 +78,8 @@ let rec desugar exprS = match exprS with
   | OrS (e1, e2)  -> IfC (desugar e1, BoolC true, IfC (desugar e2,BoolC true,BoolC false))
   | AndS (e1,e2)  -> IfC (desugar e1, IfC(desugar e2,BoolC true,BoolC false),BoolC false)
   | ArithS (s,e1,e2) -> ArithC (s,desugar e1, desugar e2)
+  | CompS (s,e1,e2) -> CompC (s,desugar e1, desugar e2)
+
 
 (* You will need to add cases here. *)
 (* interp : Value env -> exprC -> value *)
