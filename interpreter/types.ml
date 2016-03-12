@@ -15,6 +15,7 @@ type exprC = NumC of float
 			|BoolC of bool 
       |IfC of exprC * exprC * exprC
       |ArithC of string * exprC * exprC
+      |CompC of string * exprC * exprC
 
 
 (* You will need to add more cases here. *)
@@ -50,6 +51,20 @@ let arithEval op v1 v2 =
                         | _ -> raise (Interp "Not an operator"))
   | _ -> raise (Interp "Not a Num")
 
+let compEval op v1 v2 = 
+  match (v1, v2) with
+  | (Num x, Num y) -> (match op with
+                       | ">" -> Bool (x > y)
+                       | ">=" -> Bool (x >= y)
+                       | "<" -> Bool (x < y)
+                       | "<=" -> Bool (x <= y)
+                       | _ -> raise (Interp "Not an operator"))
+  | _ -> raise (Interp "Not a Num")
+
+
+
+
+
 (* INTERPRETER *)
 
 (* You will need to add cases here. *)
@@ -74,6 +89,7 @@ let rec interp env r = match r with
      | Bool false -> interp env op2
      | _ -> raise (Interp "Not a Bool")) 
   | ArithC (op, v1, v2) -> arithEval op (interp env v1) (interp env v2)
+  | CompC (op, v1, v2) -> compEval op (interp env v1) (interp env v2)
 
 (* evaluate : exprC -> val *)
 let evaluate exprC = exprC |> interp []

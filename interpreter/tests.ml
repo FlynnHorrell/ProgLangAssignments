@@ -39,3 +39,12 @@ let t3b = evaluate (ArithC ("-" , NumC 2. , NumC 1.)) = Num 1.
 let t3c = evaluate (ArithC ("*" , NumC 5. , NumC 5.)) = Num 25.
 let t3d = evaluate (ArithC ("/" , NumC 10. , NumC 1.)) = Num 10.
 let t3e = desugar (ArithS ("+", NumS 1., NumS 1.)) = ArithC("+", NumC 1., NumC 1.)
+
+let t4a = evaluate (CompC (">", NumC 20., NumC 1.)) = Bool true 
+let t4b = evaluate (CompC (">", NumC 1., NumC 20.)) = Bool false
+let t4c = evaluate (CompC (">=", NumC 20., NumC 20.)) = Bool true 
+let t4d = evaluate (CompC (">=", NumC 0., NumC 1.)) = Bool false 
+let t4e = evaluate (CompC ("<", NumC 1., NumC 1.)) = Bool false 
+let t4f = evaluate (CompC ("<", NumC 0., NumC 1.)) = Bool true 
+let t4g = evaluate (CompC ("<=", NumC 20., NumC 100.)) = Bool true 
+let t4h = evaluate (CompC ("<=", NumC 20., NumC 1.)) = Bool false
