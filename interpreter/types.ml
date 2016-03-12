@@ -3,21 +3,23 @@ exception Interp of string       (* Use for interpreter errors *)
 
 (* You will need to add more cases here. *)
 type exprS = NumS of float
-            |BoolS of bool
-            |IfS of exprS * exprS * exprS
-            |OrS of exprS * exprS
-            |AndS of exprS * exprS
-            |NotS of exprS 
-            |ArithS of string * exprS * exprS
-            |CompS of string * exprS * exprS
+             |BoolS of bool
+             |IfS of exprS * exprS * exprS
+             |OrS of exprS * exprS
+             |AndS of exprS * exprS
+             |NotS of exprS 
+             |ArithS of string * exprS * exprS
+             |CompS of string * exprS * exprS
+             |EqS of exprS * exprS
+             |NeqS of exprS * exprS
 
 (* You will need to add more cases here. *)
 type exprC = NumC of float
-			|BoolC of bool 
-      |IfC of exprC * exprC * exprC
-      |ArithC of string * exprC * exprC
-      |CompC of string * exprC * exprC
-      |EqC of exprC * exprC
+			       |BoolC of bool 
+             |IfC of exprC * exprC * exprC
+             |ArithC of string * exprC * exprC
+             |CompC of string * exprC * exprC
+             |EqC of exprC * exprC
 
 
 (* You will need to add more cases here. *)
@@ -76,21 +78,23 @@ let eqVal v1 v2 =
 (* You will need to add cases here. *)
 (* desugar : exprS -> exprC *)
 let rec desugar exprS = match exprS with
-  | NumS i        -> NumC i
-  | BoolS b       -> BoolC b
-  | IfS (a, b, c) -> IfC (desugar a, desugar b, desugar c)
-  | NotS e        -> IfC (desugar e, BoolC false,BoolC true)
-  | OrS (e1, e2)  -> IfC (desugar e1, BoolC true, IfC (desugar e2,BoolC true,BoolC false))
-  | AndS (e1,e2)  -> IfC (desugar e1, IfC(desugar e2,BoolC true,BoolC false),BoolC false)
-  | ArithS (s,e1,e2) -> ArithC (s,desugar e1, desugar e2)
-  | CompS (s,e1,e2) -> CompC (s,desugar e1, desugar e2)
+  | NumS i            -> NumC i
+  | BoolS b           -> BoolC b
+  | IfS (a, b, c)     -> IfC (desugar a, desugar b, desugar c)
+  | NotS e            -> IfC (desugar e, BoolC false,BoolC true)
+  | OrS (e1, e2)      -> IfC (desugar e1, BoolC true, IfC (desugar e2,BoolC true,BoolC false))
+  | AndS (e1,e2)      -> IfC (desugar e1, IfC(desugar e2,BoolC true,BoolC false),BoolC false)
+  | ArithS (s,e1,e2)  -> ArithC (s,desugar e1, desugar e2)
+  | CompS (s,e1,e2)   -> CompC (s,desugar e1, desugar e2)
+  | EqS (e1, e2)      -> EqC (desugar e1, desugar e2)
+  | NeqS (e1, e2)     -> desugar (NotS (EqS( e1,e2)))
 
 
 (* You will need to add cases here. *)
 (* interp : Value env -> exprC -> value *)
 let rec interp env r = match r with
   | NumC i        -> Num i
-  | BoolC b 	  -> Bool b
+  | BoolC b 	    -> Bool b
   | IfC (test, op1, op2 ) -> 
      (match (interp env test) with 
      | Bool true -> interp env op1
