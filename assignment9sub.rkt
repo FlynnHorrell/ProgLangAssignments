@@ -19,7 +19,9 @@
 ;; Write a function `length`. It takes as input a list and returns the length of the
 ;; list.
 ;; The reference solution is 4 lines.
-
+(define (length lst)
+  (if (null lst) 0
+      (+ 1 (length (cdr lst)))))
 
 ;; Write a function `get-nth`. It takes as input a list and an integer, and it returns
 ;; the n-th element in the list, starting at index 0. If the integer is negative it
