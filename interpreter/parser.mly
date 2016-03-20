@@ -3,6 +3,7 @@
 %}
 
 %token <float> FLOAT
+<<<<<<< HEAD
 %token TRUE FALSE
 %token DBLSEMI
 %token IF THEN ELSE
@@ -19,6 +20,10 @@
 %left PLUS MINUS
 %left TIMES DIVIDE 
 
+=======
+%token DBLSEMI
+%nonassoc FLOAT
+>>>>>>> instr/master
 
 %start main
 %type <Types.exprS> main
@@ -34,6 +39,7 @@ headEx:
 
 expr:
   | FLOAT                        { NumS $1 }
+<<<<<<< HEAD
   | TRUE                         { BoolS true }
   | FALSE                        { BoolS false }
   | IF expr THEN expr ELSE expr  { IfS($2,$4,$6) }
@@ -47,5 +53,7 @@ expr:
   | expr COMPOP expr 			 { CompS ($2, $1, $3) }
   | expr EQ expr 				 { EqS ($1, $3) }
   | expr NEQ expr 				 { NeqS ($1, $3) }
+=======
+>>>>>>> instr/master
 ;
 

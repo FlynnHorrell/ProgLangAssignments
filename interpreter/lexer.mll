@@ -13,15 +13,19 @@ let white = [' ' '\t' '\n' '\r']+ | "//" ([^ '\n' '\r'])*
 let newline = '\n' | '\r' | "\r\n"
 let dblsemi = ";;"
 let float = (digit+ '.'? | digit* frac) exp?
+<<<<<<< HEAD
 let true = "true" | "#t"
 let false = "false" | "#f"
 let comp = ">" | ">=" | "<" | "<="
+=======
+>>>>>>> instr/master
 
 rule token = parse
   | white       { token lexbuf }
   | newline     { token lexbuf }
   | dblsemi     { DBLSEMI }
   | float as x  { FLOAT (float_of_string x) }
+<<<<<<< HEAD
   | true        { TRUE }
   | false       { FALSE }
   | "if" 		{ IF }
@@ -37,5 +41,7 @@ rule token = parse
   | "==" 		{ EQ }
   | "!="        { NEQ }
   | comp as s   { COMPOP s }
+=======
+>>>>>>> instr/master
   | eof         { raise Eof }
   | any         { raise Unrecognized }

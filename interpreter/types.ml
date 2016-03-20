@@ -3,6 +3,7 @@ exception Interp of string       (* Use for interpreter errors *)
 
 (* You will need to add more cases here. *)
 type exprS = NumS of float
+<<<<<<< HEAD
              |BoolS of bool
              |IfS of exprS * exprS * exprS
              |OrS of exprS * exprS
@@ -20,11 +21,19 @@ type exprC = NumC of float
              |ArithC of string * exprC * exprC
              |CompC of string * exprC * exprC
              |EqC of exprC * exprC
+=======
+
+(* You will need to add more cases here. *)
+type exprC = NumC of float
+>>>>>>> instr/master
 
 
 (* You will need to add more cases here. *)
 type value = Num of float
+<<<<<<< HEAD
 			|Bool of bool 
+=======
+>>>>>>> instr/master
 
 type 'a env = (string * 'a) list
 let empty = []
@@ -42,6 +51,7 @@ let bind str v env = (str, v) :: env
    You may be asked to add methods here. You may also choose to add your own
    helper methods here.
 *)
+<<<<<<< HEAD
 
 let arithEval op v1 v2 = 
   match (v1, v2) with
@@ -73,11 +83,14 @@ let eqVal v1 v2 =
 
 
 
+=======
+>>>>>>> instr/master
 (* INTERPRETER *)
 
 (* You will need to add cases here. *)
 (* desugar : exprS -> exprC *)
 let rec desugar exprS = match exprS with
+<<<<<<< HEAD
   | NumS i            -> NumC i
   | BoolS b           -> BoolC b
   | IfS (a, b, c)     -> IfC (desugar a, desugar b, desugar c)
@@ -89,11 +102,15 @@ let rec desugar exprS = match exprS with
   | EqS (e1, e2)      -> EqC (desugar e1, desugar e2)
   | NeqS (e1, e2)     -> desugar (NotS (EqS( e1,e2)))
 
+=======
+  | NumS i        -> NumC i
+>>>>>>> instr/master
 
 (* You will need to add cases here. *)
 (* interp : Value env -> exprC -> value *)
 let rec interp env r = match r with
   | NumC i        -> Num i
+<<<<<<< HEAD
   | BoolC b 	    -> Bool b
   | IfC (test, op1, op2 ) -> 
      (match (interp env test) with 
@@ -103,6 +120,8 @@ let rec interp env r = match r with
   | ArithC (op, v1, v2) -> arithEval op (interp env v1) (interp env v2)
   | CompC (op, v1, v2) -> compEval op (interp env v1) (interp env v2)
   | EqC (v1, v2) -> eqVal (interp env v1) (interp env v2)
+=======
+>>>>>>> instr/master
 
 (* evaluate : exprC -> val *)
 let evaluate exprC = exprC |> interp []
@@ -113,4 +132,7 @@ let evaluate exprC = exprC |> interp []
 (* You will need to add cases to this function as you add new value types. *)
 let rec valToString r = match r with
   | Num i           -> string_of_float i
+<<<<<<< HEAD
   | Bool b 			    -> string_of_bool b
+=======
+>>>>>>> instr/master

@@ -15,6 +15,7 @@ let t0c = desugar (NumS 2.3) = NumC 2.3
 
 (* Or you can combine with evaluate to get to the final value. *)
 let t0d = evaluate (desugar (NumS 2.3)) = Num 2.3
+<<<<<<< HEAD
 
 
 let t1a = evaluate (BoolC true) = Bool true
@@ -57,3 +58,5 @@ let t5d = evaluate (EqC (BoolC true, BoolC true)) = Bool true
 let t5e = evaluate (EqC (NumC 20., BoolC true)) = Bool false
 let t5f = desugar  (EqS (NumS 20., BoolS true)) = EqC (NumC 20., BoolC true)
 let t5g = desugar  (NeqS (NumS 20., BoolS true)) = exprC = IfC (EqC (NumC 20., BoolC true), BoolC false, BoolC true) 
+=======
+>>>>>>> instr/master

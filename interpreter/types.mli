@@ -2,6 +2,7 @@ exception Desugar of string      (* Use for desugarer errors *)
 exception Interp of string       (* Use for interpreter errors *)
 
 type exprS = NumS of float
+<<<<<<< HEAD
 			|BoolS of bool
 			|IfS of exprS * exprS * exprS
 			|OrS of exprS * exprS
@@ -21,6 +22,10 @@ type exprC = NumC of float
 
 type value = Num of float
 			 |Bool of bool
+=======
+type exprC = NumC of float
+type value = Num of float
+>>>>>>> instr/master
 
 (* Environment lookup *)
 type 'a env
