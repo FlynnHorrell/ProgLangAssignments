@@ -80,4 +80,6 @@
 ;; list of the results of calling those thunks. To call a function, you put it as the
 ;; first entry in parentheses, followed by any arguments it may have.
 ;; The reference solution is 4 lines.
-
+(define (call-all lst)
+   (cond [(null? lst) (list)]
+         [else (cons ((car lst)) (call-all (cdr lst)))]))
