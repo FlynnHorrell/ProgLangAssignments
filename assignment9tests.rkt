@@ -9,6 +9,7 @@
 ;; add-nums
 (equal? (add-nums (list)) 0) ;;empty list
 (equal? (add-nums (list 1 2 'a 3)) 6) ;; non-number
+(equal? (add-nums (list -1 2 3 4 5)) 14) 
 
 ;; length
 (equal? (length (list)) 0) ;; empty list
