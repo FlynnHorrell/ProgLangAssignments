@@ -57,6 +57,12 @@
 ;; and two lists. It then creates a single new list by applying the function to pairs
 ;; of values one from each list. The process stops when one of the lists is empty.
 ;; The reference solution is 5 lines.
+(define (map2 func lst1 lst2)
+  (cond [(or (null? lst1)  (null? lst2)) (list)]
+        [else (cons (func (car lst1) (car lst2))
+                    (map2 func (cdr lst1) (cdr lst2)))]))
+        
+
 
 
 ;; Write a function `filter`. It takes as input a function and a list and returns
