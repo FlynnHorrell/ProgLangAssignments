@@ -32,6 +32,9 @@
 ;; every-other
 (equal? (every-other (list 1 2 3 4)) (list 1 3)) ;; even length
 (equal? (every-other (list 1 2 3)) (list 1 3))   ;; odd length
+(equal? (every-other (list)) (list))   ;; null list
+(equal? (every-other (list 1)) (list 1))   
+(equal? (every-other (list 1 2)) (list 1))   
 
 ;; map
 (equal? (map (lambda (x) (* x x)) (list 1 2 3))
