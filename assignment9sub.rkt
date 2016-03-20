@@ -28,7 +28,12 @@
 ;; should return `(error "negative index")`. If the list is not long enough it should
 ;; return `(error "list too short")`.
 ;; The reference solution is 5 lines.
-
+(define (get-nth lst num)
+  (cond [(< num 0) (error "negative index")]
+        [(null? lst) (error "list is too short")]
+        [(equal? num 0) (car lst)]
+        [else (get-nth (cdr lst) (- num 1))]))
+       
 
 ;; Write a function `every-other`. It takes as input a list, and it returns a new list
 ;; where every other term is skipped. So applied to the list `'(1 2 3)` it should return
