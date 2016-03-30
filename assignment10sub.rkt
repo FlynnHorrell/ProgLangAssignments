@@ -242,6 +242,9 @@
 ;; Some cases done for you.
 (define (interp env e)
   (cond [(num? e) e]
+        [(bool? e) e]
+        [(nul? e) e]
+        ;;var
         [(arith? e)
          (let ([v1 (interp env (arith-e1 e))]
                [v2 (interp env (arith-e2 e))]
@@ -250,6 +253,16 @@
            (if (and (num? v1) (num? v2))
                (num (op (num-n v1) (num-n v2)))
                (error "interp: arithmetic on non-numbers")))]
+        ;;comp
+        ;;if-e
+        ;;eq-e
+        ;;let-e
+        ;;fun
+        ;;call
+        ;;isnul
+        ;;pair-e
+        ;;fst
+        ;;snd
         [else (error "interp: unknown expression")]))
  
 ;;         EVALUATE
@@ -287,8 +300,7 @@
 ;; TODO: Write a function `or2` that takes as input two source language
 ;; expressions `e1` and `e2` and returns the appropriate `if-e` expression
 ;; that performs the "or" of the two expressions.
-(define (or2 e1 e2)
-  #f)   ;  <----- Need to fix this
+(define (or2 e1 e2) (if-e e1 e1 e2))  ;  <----- Need to fix this
 
 ;; TODO: Write a function `and2` that takes as input two source language
 ;; expressions `e1` and `e2` and returns the appropriate `if-e` expression
