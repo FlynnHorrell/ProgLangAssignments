@@ -161,7 +161,12 @@
 ;; add the rest.
 (define (value? e)
   (or (num? e)
-      #f))      ;; <---- Need to change this
+      (bool? e)
+      (nul? e)
+      (clos? e)
+      (and (pair-e? e)
+           (value? (pair-e-e1 e))
+           (value? (pair-e-e2 e)))))
 
 ;; TODO: Write a function `value-eq?` to test if two values are "equal".
 ;; Two values `v1`, `v2` are considered equal in the following cases:
@@ -174,6 +179,12 @@
 (define (value-eq? v1 v2)
   (cond [(and (num? v1) (num? v2))
          (equal? (num-n v1) (num-n v2))]
+        [(and (bool? v1) (bool? v2))
+         (equal? (bool-b v1) (bool-b v2))]
+        [(and (nul? v1) (nul? v2)) #t]
+        [(and (pair-e? v1) (pair-e? v2))
+         (and (equal? (pair-e-e1 v1) (pair-e-e1 v2))
+              (equal? (pair-e-e2 v1) (pair-e-e2 v2)))]
         [else #f]))          ;; <---- Need to add more cases
               
 
