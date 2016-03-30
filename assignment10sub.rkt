@@ -108,8 +108,41 @@
          (and (memq (arith-op e) (list '+ '* '- '/))
               (valid-program? (arith-e1 e))
               (valid-program? (arith-e2 e)))]
+        [(var? e)(symbol? (var-s e))]
+        [(num? e)(number? (num-n e))]
+        [(bool? e) (boolean? (bool-b e))]
+        [(comp? e)
+         (and (memq (comp-op e) (list '< '<= '>= '>))
+              (valid-program? (comp-e1 e))
+              (valid-program? (comp-e2 e)))]
+        [(if-e? e)
+         (and (valid-program? (if-e-tst e))
+              (valid-program? (if-e-thn e))
+              (valid-program? (if-e-els e)))]
+        [(eq-e? e)
+          (and (valid-program? (eq-e-e1 e))
+               (valid-program? (eq-e-e2 e)))]
+        [(let-e? e)
+          (and (symbol? let-e-s e)
+               (valid-program? (let-e-e1 e))
+               (valid-program? (let-e-e2 e)))]
+        [(call? e)
+            (and (valid-program? (call-e1 e))
+                 (valid-program? (call-e2 e)))]
+        [(nul? e) #t]
+        [(isnul? e) (valid-program? (isnul-e e))]
+        [(pair-e? e)
+            (and (valid-program? (pair-e-e1 e))
+                 (valid-program? (pair-e-e2 e)))]
+        [(fst? e) (valid-program? (fst-e e))]
+        [(snd? e) (valid-program? (snd-e e))]
+       [(fun? e)
+         (and (symbol? (fun-arg e))
+              (or (equal? (fun-name e) #f)
+                  (and (symbol? (fun-name e))
+                       (not (equal? (fun-name e) (fun-arg e)))))
+              (valid-program? (fun-body e)))]
         [else #f]))
-
 
 ;;     VALUES
 ;; We will use some of the structs above as values.
