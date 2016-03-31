@@ -253,9 +253,24 @@
            (if (and (num? v1) (num? v2))
                (num (op (num-n v1) (num-n v2)))
                (error "interp: arithmetic on non-numbers")))]
-        ;;comp
-        ;;if-e
-        ;;eq-e
+         [(comp? e)
+         (let ([v1 (interp env (comp-e1 e))]
+               [v2 (interp env (comp-e2 e))]
+               [op (case (comp-op e)
+                     ['> >] ['>= >=] ['< <] ['<= <=])])
+           (if (and (num? v1) (num? v2))
+               (bool (op (num-n v1) (num-n v2)))
+               (error "interp: comp on non-numbers")))] 
+        ;;[(if-e? e) 
+          ;;(if (bool? (if-e-tst))
+              ;;if (if-e-tst)
+                  ;;(interp env (if-e-thn))
+                  ;;(interp env (if-e-els))
+              ;;(else (error "interp: if-e on nonbool"))))]
+        [(eq? e)
+          (let ([v1 (interp env (eq-e-e1))]
+                [v2 (interp env (eq-e-e2))])
+                (value-eq? v1 v2))]
         ;;let-e
         ;;fun
         ;;call
