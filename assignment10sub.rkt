@@ -272,13 +272,24 @@
           (let ([v1 (interp env (eq-e-e1))]
                 [v2 (interp env (eq-e-e2))])
                 (bool (value-eq? v1 v2)))]
-        ;;let-e
-        ;;fun
+        [(let-e? e)
+         (let* ([v1 (interp env (let-e-e1 e))]
+                [env2 (bind (let-e-s e) v1 env)])
+           (interp env2 (let-e-e2 e)))]
+        [(fun? e) (clos e env)]
         ;;call
-        ;;isnul
+        [(isnul? e) (bool (nul? (interp env (isnul-e e))))]
         ;;pair-e
-        ;;fst
-        ;;snd
+        [(fst? e)
+         (let ([v1 (interp env (fst-e e))])
+           (if (pair-e? v1)
+               (pair-e-e1 v1)
+               (error "interp: not a pair-e")))]
+        [(snd? e)
+         (let ([v1 (interp env (snd-e e))])
+           (if (pair-e? v1)
+               (pair-e-e2 v1)
+               (error "interp: not a pair-e")))]
         [else (error "interp: unknown expression")]))
  
 ;;         EVALUATE
