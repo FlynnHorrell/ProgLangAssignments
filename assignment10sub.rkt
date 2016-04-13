@@ -418,7 +418,7 @@
 ;; Do this as a function that uses `foldr`.
 (define racketlist->sourcelist
   (lambda (exps)
-    #f))        ;  <--- Replace this with an appropriate foldr call.
+    (foldr (lambda (acc lst) (pair-e acc lst)) (nul) exps)))
 
 ;; TODO: Write a source language expression `map-e`. It should be a 
 ;; `fun` that takes as input a "fun" `f` and returns a `fun` that takes
