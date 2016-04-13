@@ -371,7 +371,7 @@
   (syntax-rules ()
     [(let-e* () e) e]
     [(let-e* ([s1 e1]) e) (let-e s1 e1 e)]
-    [(let-e* ([s1 e1] rest ...) e) #f]))  ; <-- Need to fix this.
+    [(let-e* ([s1 e1] rest ...) e) (let-e s1 e1 (let-e* (rest ...) e))]))
 
 ;; TODO: Write functions or macros `plus`, and `mult` that take any number
 ;; of source language expressions as arguments and creates a corresponding
@@ -381,8 +381,13 @@
 ;; You can choose either a macro approach like in `and-e` or a function
 ;; approach and `foldr` like in `or-e`.
 
+(define plus
+  (lambda es
+    (foldr (lambda (acc lst) (plus2 acc lst)) (num 0) es)))
 
-
+(define mult
+  (lambda es
+    (foldr (lambda (acc lst) (mult2 acc lst)) (num 1) es)))
 
 ;; TODO: Write a macro `minus` that takes one or more arguments and behaves
 ;; as follows:
